@@ -6,7 +6,7 @@
 - Instalar Version 3.2.0
 rvm install 3.2.0`
 
-- Crear version de Edutecnia
+- Crear version para proyecto
 rvm use 3.2.0@talento-docente --create
 ```    
 
