@@ -27,3 +27,8 @@ rails db:migrate
 rails db:seed
 ```
 
+* Run Project in Development Mode
+```
+rails s
+```
+
