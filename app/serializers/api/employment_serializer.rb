@@ -10,6 +10,7 @@ module Api
                :schedule_type,
                :start_date,
                :status,
-               :title
+               :title,
+               :establishment_id
   end
 end

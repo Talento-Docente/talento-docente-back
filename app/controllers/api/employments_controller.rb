@@ -43,7 +43,8 @@ class Api::EmploymentsController < AuthApplicationController
           :schedule_type,
           :start_date,
           :status,
-          :title
+          :title,
+          :establishment_id
         ]
       )
   end
@@ -60,7 +61,8 @@ class Api::EmploymentsController < AuthApplicationController
         :schedule_type,
         :start_date,
         :status,
-        :title
+        :title,
+        :establishment_id
       )
   end
 
