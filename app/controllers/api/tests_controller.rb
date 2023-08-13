@@ -50,7 +50,27 @@ class Api::TestsController < AuthApplicationController
         :name,
         :time_type,
         :time_value,
-        :establishment_id
+        :establishment_id,
+        questions_attributes: [
+          :id,
+          :_destroy,
+          :group,
+          :hint,
+          :order_number,
+          :question,
+          :question_type,
+          :value,
+          :test_id,
+          alternatives_attributes: [
+            :id,
+            :_destroy,
+            :description,
+            :hint,
+            :key,
+            :value,
+            :question_id
+          ]
+        ]
       )
   end
 

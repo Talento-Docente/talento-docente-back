@@ -133,7 +133,7 @@ module RestHelper
     render json: @items,
            meta: paginate(@items),
            adapter: :json,
-           view_data_method: _search_params.present? ? _search_params[:view_data_method] : nil
+           view_data_method: _search_params.present? && _search_params[:view_data_method].present? ? _search_params[:view_data_method] : 'index'
   rescue ParamsErrors::ParamsNotFound, ParamsErrors::ModelNotFound => e
     _log.error(method: "index", message: "error response %s" % e.message)
     show_error(error: e)
@@ -155,7 +155,7 @@ module RestHelper
     raise ParamsErrors::NotFound unless _element.present?
     before_show_method
 
-    render json: _element, adapter: :attributes, view_data_method: _search_params.present? ? _search_params[:view_data_method] : nil
+    render json: _element, adapter: :attributes, view_data_method: _search_params.present? && _search_params[:view_data_method].present? ? _search_params[:view_data_method] : 'show'
 
   rescue ParamsErrors::NotFound => e
     _log.error(method: "update", message: "error response %s" % e.message)

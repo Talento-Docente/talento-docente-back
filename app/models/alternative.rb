@@ -19,7 +19,7 @@
 class Alternative < ApplicationRecord
 
   # Relationship
-  belongs_to :question, dependent: :destroy
+  belongs_to :question
 
   # Soft Delete
   acts_as_paranoid
