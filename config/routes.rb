@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     resources :establishments, only: [:update, :create, :destroy, :index, :show]
     resources :employments, only: [:update, :create, :destroy, :index, :show]
     resources :applicants, only: [:update, :create, :destroy, :index, :show]
+    resources :flows, only: [:update, :create, :destroy, :index, :show] do
+      resources :stages, only: [:update, :create, :destroy, :index, :show]
+    end
 
   end
 

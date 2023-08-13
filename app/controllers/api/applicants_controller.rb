@@ -32,7 +32,7 @@ class Api::ApplicantsController < AuthApplicationController
       element_params: element_params,
       services: %w[index show update create destroy],
       current_user: current_user,
-      required_establishment: false,
+      required_parent_model: false,
       excluded: []
     )
   end

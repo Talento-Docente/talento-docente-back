@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_201720) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_042411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_201720) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "flows", force: :cascade do |t|
+    t.bigint "establishment_id"
+    t.string "name"
+    t.text "description"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_flows_on_establishment_id"
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "establishment_id"
@@ -102,8 +112,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_201720) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "stage_id"
     t.index ["applicant_id"], name: "index_postulations_on_applicant_id"
     t.index ["employment_id"], name: "index_postulations_on_employment_id"
+    t.index ["stage_id"], name: "index_postulations_on_stage_id"
+  end
+
+  create_table "stages", force: :cascade do |t|
+    t.bigint "flow_id"
+    t.string "name"
+    t.integer "order_number", default: 1
+    t.text "description"
+    t.integer "stage_type"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flow_id"], name: "index_stages_on_flow_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -139,4 +163,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_201720) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "postulations", "stages"
 end

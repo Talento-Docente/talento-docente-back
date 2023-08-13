@@ -10,8 +10,8 @@ module RestHelper
               :_element_params,
               :_services,
               :_current_user,
-              :_required_establishment,
-              :_current_establishment
+              :_required_parent_model,
+              :_parent_model
 
   def prepare_search(model:,
                      class_name: "",
@@ -20,8 +20,8 @@ module RestHelper
                      params: nil,
                      search_params: nil,
                      current_user: nil,
-                     required_establishment: false,
-                     current_establishment: nil,
+                     required_parent_model: false,
+                     parent_model: nil,
                      excluded: [])
     @_model = model
     @_log = LoggerService.new(class_name: "#{class_name}::RestHelper")
@@ -31,8 +31,8 @@ module RestHelper
     @_element_params = element_params
     @_services = services
     @_current_user = current_user
-    @_required_establishment = required_establishment
-    @_current_establishment = current_establishment
+    @_required_parent_model = required_parent_model
+    @_parent_model = parent_model
   end
 
   def search_params
@@ -53,8 +53,8 @@ module RestHelper
   end
 
   def set_element
-    if _required_establishment
-      @_element = _current_establishment
+    if _required_parent_model
+      @_element = _parent_model
                     .send(_model.name.snakecase.pluralize)
                     .where(id: params[:id]).first
     else
@@ -98,8 +98,8 @@ module RestHelper
   end
 
   def search_by
-    if _required_establishment
-      _current_establishment
+    if _required_parent_model
+      _parent_model
         .send(_model.name.snakecase.pluralize)
         .where(JSON.parse(_params[:search_by].except(*_excluded).to_json))
     else
@@ -112,8 +112,8 @@ module RestHelper
   end
 
   def all
-    if _required_establishment
-      _current_establishment
+    if _required_parent_model
+      _parent_model
         .send(_model.name.snakecase.pluralize)
         .all
     else
@@ -133,8 +133,7 @@ module RestHelper
     render json: @items,
            meta: paginate(@items),
            adapter: :json,
-           view_data_method: _search_params.present? ? _search_params[:view_data_method] : nil,
-           establishment_period_id: _params[:search_by].present? ? _params[:search_by][:establishment_period_id]: _params[:establishment_period_id]
+           view_data_method: _search_params.present? ? _search_params[:view_data_method] : nil
   rescue ParamsErrors::ParamsNotFound, ParamsErrors::ModelNotFound => e
     _log.error(method: "index", message: "error response %s" % e.message)
     show_error(error: e)
@@ -156,7 +155,7 @@ module RestHelper
     raise ParamsErrors::NotFound unless _element.present?
     before_show_method
 
-    render json: _element, adapter: :attributes, view_data_method: _search_params.present? ? _search_params[:view_data_method] : nil, establishment_period_id: _search_params.present? ? _search_params[:establishment_period_id] : nil
+    render json: _element, adapter: :attributes, view_data_method: _search_params.present? ? _search_params[:view_data_method] : nil
 
   rescue ParamsErrors::NotFound => e
     _log.error(method: "update", message: "error response %s" % e.message)
@@ -204,8 +203,8 @@ module RestHelper
   def create
     raise ParamsErrors::ServiceNotRegister unless valid_service?(service: "create")
     before_create_method
-    if _required_establishment
-      @element = _model.create(_element_params.merge({ establishment: _current_establishment }))
+    if _required_parent_model
+      @element = _model.create(_element_params.merge({ "#{_parent_model.class.name.snakecase}": _parent_model }))
       if @element.save
         render json: { message: 'success create', status: "success", "#{_model.name.snakecase}": @element }, adapter: :attributes
       else

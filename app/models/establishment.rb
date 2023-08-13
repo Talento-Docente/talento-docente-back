@@ -16,6 +16,7 @@ class Establishment < ApplicationRecord
   has_many :permissions
   has_many :user, through: :permissions, class_name: "User"
   has_many :employments
+  has_many :flows
 
   # Soft Delete
   acts_as_paranoid

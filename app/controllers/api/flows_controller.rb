@@ -1,20 +1,20 @@
-class Api::EstablishmentsController < AuthApplicationController
+class Api::FlowsController < AuthApplicationController
   # Includes
   include RestHelper
 
   # Constants
-  CLASS_NAME = "Api::EstablishmentsController"
+  CLASS_NAME = "Api::FlowsController"
   LOG = LoggerService.new(class_name: CLASS_NAME)
 
   # Scopes
   before_action :init_search_helper
-  before_action :set_element, only: [:show, :update]
+  before_action :set_element, only: [:show, :update, :destroy]
 
   private
 
   def init_search_helper
     prepare_search(
-      model: Establishment,
+      model: Flow,
       class_name: CLASS_NAME,
       params: params,
       search_params: search_params,
@@ -34,9 +34,9 @@ class Api::EstablishmentsController < AuthApplicationController
         :sort_order,
         :sort_field,
         search_by: [
-          :address,
           :name,
-          :phone
+          :description,
+          :establishment_id
         ]
       )
   end
@@ -44,9 +44,10 @@ class Api::EstablishmentsController < AuthApplicationController
   def element_params
     params
       .permit(
-        :address,
+        :id,
         :name,
-        :phone
+        :description,
+        :establishment_id
       )
   end
 
