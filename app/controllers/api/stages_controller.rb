@@ -10,7 +10,10 @@ class Api::StagesController < AuthApplicationController
   before_action :init_search_helper
   before_action :set_element, only: [:show, :update, :destroy]
 
-  private
+  def set_order
+    _params[:sort_field] = "order_number"
+    _params[:sort_order] = "asc"
+  end
 
   def init_search_helper
     prepare_search(
