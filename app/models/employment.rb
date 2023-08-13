@@ -53,6 +53,8 @@ class Employment < ApplicationRecord
   has_many :postulations
   has_many :applicants, through: :postulations, class_name: "Applicant"
   belongs_to :flow
+  has_many :stage_configurations, dependent: :destroy
+  accepts_nested_attributes_for :stage_configurations, allow_destroy: true
 
   # Soft Delete
   acts_as_paranoid

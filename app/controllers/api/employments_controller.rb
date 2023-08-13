@@ -64,10 +64,23 @@ class Api::EmploymentsController < AuthApplicationController
         :status,
         :title,
         :establishment_id,
-        :flow_id
+        :flow_id,
+        stage_configurations_attributes: [
+          :id,
+          :_destroy,
+          :date_end,
+          :meet_date,
+          :meet_url,
+          :employment_id,
+          :stage_id,
+          stage_configuration_references_attributes: [
+            :id,
+            :_destroy,
+            :name,
+            :description
+          ]
+        ]
       )
   end
-
-
 
 end

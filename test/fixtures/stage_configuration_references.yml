@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: stage_configuration_references
+#
+#  id                     :bigint           not null, primary key
+#  deleted_at             :datetime
+#  description            :string
+#  name                   :string
+#  reference_type         :integer          default("document")
+#  resource_type          :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  resource_id            :bigint
+#  stage_configuration_id :bigint
+#
+# Indexes
+#
+#  index_stage_configuration_references_on_resource                (resource_type,resource_id)
+#  index_stage_configuration_references_on_stage_configuration_id  (stage_configuration_id)
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

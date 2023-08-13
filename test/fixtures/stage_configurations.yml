@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: stage_configurations
+#
+#  id            :bigint           not null, primary key
+#  date_end      :datetime
+#  deleted_at    :datetime
+#  meet_date     :datetime
+#  meet_url      :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  employment_id :bigint
+#  stage_id      :bigint
+#
+# Indexes
+#
+#  index_stage_configurations_on_employment_id  (employment_id)
+#  index_stage_configurations_on_stage_id       (stage_id)
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

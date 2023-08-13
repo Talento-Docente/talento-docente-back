@@ -12,9 +12,11 @@ module Api
                :status,
                :title,
                :flow_id,
-               :establishment_id
+               :establishment_id,
+               :stage_configurations
 
     has_one :flow, serializer: Api::FlowSerializer
+    has_many :stage_configurations, serializer: Api::StageConfigurationSerializer
 
   end
 end

@@ -28,6 +28,7 @@ class Stage < ApplicationRecord
   # Relationship
   belongs_to :flow
   has_many :postulations
+  has_many :stage_configurations
 
   # Soft Delete
   acts_as_paranoid

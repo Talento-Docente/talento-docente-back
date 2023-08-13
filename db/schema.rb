@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_13_052835) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_053738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -118,6 +118,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_052835) do
     t.index ["applicant_id"], name: "index_postulations_on_applicant_id"
     t.index ["employment_id"], name: "index_postulations_on_employment_id"
     t.index ["stage_id"], name: "index_postulations_on_stage_id"
+  end
+
+  create_table "stage_configuration_references", force: :cascade do |t|
+    t.bigint "stage_configuration_id"
+    t.string "name"
+    t.string "description"
+    t.integer "reference_type", default: 0
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resource_type", "resource_id"], name: "index_stage_configuration_references_on_resource"
+    t.index ["stage_configuration_id"], name: "index_stage_configuration_references_on_stage_configuration_id"
+  end
+
+  create_table "stage_configurations", force: :cascade do |t|
+    t.bigint "stage_id"
+    t.bigint "employment_id"
+    t.string "meet_url"
+    t.datetime "meet_date"
+    t.datetime "date_end"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employment_id"], name: "index_stage_configurations_on_employment_id"
+    t.index ["stage_id"], name: "index_stage_configurations_on_stage_id"
   end
 
   create_table "stages", force: :cascade do |t|
