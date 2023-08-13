@@ -3,13 +3,17 @@ Rails.application.routes.draw do
 
   namespace :api do
 
-    resources :establishments, only: [:update, :create, :destroy, :index, :show]
-    resources :employments, only: [:update, :create, :destroy, :index, :show]
-    resources :applicants, only: [:update, :create, :destroy, :index, :show]
-    resources :flows, only: [:update, :create, :destroy, :index, :show] do
-      resources :stages, only: [:update, :create, :destroy, :index, :show]
+    resources :establishments
+    resources :employments
+    resources :applicants
+    resources :flows do
+      resources :stages
     end
-
+    resources :tests do
+      resources :questions do
+        resources :alternatives
+      end
+    end
   end
 
 

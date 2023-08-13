@@ -77,7 +77,9 @@ class Api::EmploymentsController < AuthApplicationController
             :id,
             :_destroy,
             :name,
-            :description
+            :description,
+            :resource_id,
+            :resource_type
           ]
         ]
       )

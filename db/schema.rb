@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_13_053738) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_062857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_053738) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "alternatives", force: :cascade do |t|
+    t.bigint "question_id"
+    t.string "key"
+    t.text "description"
+    t.text "hint"
+    t.integer "value", default: 1
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_alternatives_on_question_id"
   end
 
   create_table "applicants", force: :cascade do |t|
@@ -120,6 +132,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_053738) do
     t.index ["stage_id"], name: "index_postulations_on_stage_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.bigint "test_id"
+    t.integer "order_number", default: 1
+    t.text "question"
+    t.text "hint"
+    t.integer "question_type", default: 0
+    t.integer "value", default: 1
+    t.string "group"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_id"], name: "index_questions_on_test_id"
+  end
+
   create_table "stage_configuration_references", force: :cascade do |t|
     t.bigint "stage_configuration_id"
     t.string "name"
@@ -157,6 +183,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_053738) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["flow_id"], name: "index_stages_on_flow_id"
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.bigint "establishment_id"
+    t.string "name"
+    t.string "description"
+    t.integer "time_type", default: 0
+    t.integer "time_value", default: 0
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_tests_on_establishment_id"
   end
 
   create_table "users", force: :cascade do |t|
