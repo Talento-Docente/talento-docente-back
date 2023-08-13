@@ -23,6 +23,7 @@ class Stage < ApplicationRecord
   STAGE_TYPE_DOCUMENTS = "document"
   STAGE_TYPE_TEST = "test"
   STAGE_TYPE_MEET = "meet"
+  STAGE_TYPE_FINISH = "finish"
 
   # Relationship
   belongs_to :flow
@@ -36,6 +37,7 @@ class Stage < ApplicationRecord
     STAGE_TYPE_NORMAL,
     STAGE_TYPE_DOCUMENTS,
     STAGE_TYPE_TEST,
-    STAGE_TYPE_MEET
+    STAGE_TYPE_MEET,
+    STAGE_TYPE_FINISH,
   ]
 end
