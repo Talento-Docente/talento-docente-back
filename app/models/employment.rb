@@ -17,10 +17,16 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  establishment_id :bigint
+#  flow_id          :bigint
 #
 # Indexes
 #
 #  index_employments_on_establishment_id  (establishment_id)
+#  index_employments_on_flow_id           (flow_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (flow_id => flows.id)
 #
 class Employment < ApplicationRecord
 
@@ -46,6 +52,7 @@ class Employment < ApplicationRecord
   has_many :establishments
   has_many :postulations
   has_many :applicants, through: :postulations, class_name: "Applicant"
+  belongs_to :flow
 
   # Soft Delete
   acts_as_paranoid

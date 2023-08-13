@@ -11,6 +11,10 @@ module Api
                :start_date,
                :status,
                :title,
+               :flow_id,
                :establishment_id
+
+    has_one :flow, serializer: Api::FlowSerializer
+
   end
 end

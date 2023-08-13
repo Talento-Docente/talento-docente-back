@@ -19,6 +19,7 @@ class Flow < ApplicationRecord
   # Relationship
   belongs_to :establishment
   has_many :stages
+  has_many :employments
 
   # Soft Delete
   acts_as_paranoid

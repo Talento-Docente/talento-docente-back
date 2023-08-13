@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_13_042411) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_13_052835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,7 +73,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_042411) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "flow_id"
     t.index ["establishment_id"], name: "index_employments_on_establishment_id"
+    t.index ["flow_id"], name: "index_employments_on_flow_id"
   end
 
   create_table "establishments", force: :cascade do |t|
@@ -163,5 +165,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_042411) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "employments", "flows"
   add_foreign_key "postulations", "stages"
 end

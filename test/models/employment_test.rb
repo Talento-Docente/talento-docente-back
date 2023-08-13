@@ -17,10 +17,16 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  establishment_id :bigint
+#  flow_id          :bigint
 #
 # Indexes
 #
 #  index_employments_on_establishment_id  (establishment_id)
+#  index_employments_on_flow_id           (flow_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (flow_id => flows.id)
 #
 require "test_helper"
 

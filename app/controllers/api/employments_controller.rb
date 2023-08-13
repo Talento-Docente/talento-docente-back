@@ -44,6 +44,7 @@ class Api::EmploymentsController < AuthApplicationController
           :start_date,
           :status,
           :title,
+          :flow_id,
           :establishment_id
         ]
       )
@@ -62,7 +63,8 @@ class Api::EmploymentsController < AuthApplicationController
         :start_date,
         :status,
         :title,
-        :establishment_id
+        :establishment_id,
+        :flow_id
       )
   end
 
