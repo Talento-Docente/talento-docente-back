@@ -47,7 +47,16 @@ class Api::FlowsController < AuthApplicationController
         :id,
         :name,
         :description,
-        :establishment_id
+        :establishment_id,
+        stages_attributes: [
+          :id,
+          :_destroy,
+          :description,
+          :name,
+          :stage_type,
+          :order_number,
+          :flow_id
+        ]
       )
   end
 

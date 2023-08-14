@@ -20,6 +20,7 @@ class Flow < ApplicationRecord
   belongs_to :establishment
   has_many :stages
   has_many :employments
+  accepts_nested_attributes_for :stages, allow_destroy: true
 
   # Soft Delete
   acts_as_paranoid
