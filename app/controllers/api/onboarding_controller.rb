@@ -16,7 +16,7 @@ class Api::OnboardingController < AuthApplicationController
     email = params[:email]
     raise StandardError, "Email no especificado" unless email.present?
 
-    user = User.where("lower(users.email) = ?", email.to_s.strip.downcase)
+    user = User.where("lower(users.email) = ?", email.to_s.strip.downcase).first
     raise StandardError, "Usuario encontrado" if user.present?
 
     render json: { status: "success", message: "Usuario no encontrado" }, status: :ok
@@ -31,7 +31,7 @@ class Api::OnboardingController < AuthApplicationController
     dni = params[:dni]
     raise StandardError, "Dni no especificado" unless dni.present?
 
-    user = User.where("lower(users.dni) = ?", dni.to_s.strip.downcase)
+    user = User.where("lower(users.dni) = ?", dni.to_s.strip.downcase).first
     raise StandardError, "Usuario encontrado" if user.present?
 
     render json: { status: "success", message: "Usuario no encontrado" }, status: :ok
@@ -46,7 +46,7 @@ class Api::OnboardingController < AuthApplicationController
     dni = params[:dni]
     raise StandardError, "Dni no especificado" unless dni.present?
 
-    user = Establishment.where("lower(establishments.dni) = ?", dni.to_s.strip.downcase)
+    user = Establishment.where("lower(establishments.dni) = ?", dni.to_s.strip.downcase).first
     raise StandardError, "Establecimiento encontrado" if user.present?
 
     render json: { status: "success", message: "Establecimiento no encontrado" }, status: :ok
