@@ -11,7 +11,8 @@ module RestHelper
               :_services,
               :_current_user,
               :_required_parent_model,
-              :_parent_model
+              :_parent_model,
+              :_search_text_params
 
   def prepare_search(model:,
                      class_name: "",
@@ -22,7 +23,8 @@ module RestHelper
                      current_user: nil,
                      required_parent_model: false,
                      parent_model: nil,
-                     excluded: [])
+                     excluded: [],
+                     search_text_params: nil)
     @_model = model
     @_log = LoggerService.new(class_name: "#{class_name}::RestHelper")
     @_params = params
@@ -33,6 +35,7 @@ module RestHelper
     @_current_user = current_user
     @_required_parent_model = required_parent_model
     @_parent_model = parent_model
+    @_search_text_params = search_text_params
   end
 
   def search_params
@@ -98,15 +101,30 @@ module RestHelper
   end
 
   def search_by
+    if _search_text_params.present? && _params[:search_by][:search_text].present?
+      search_text = _params[:search_by][:search_text].to_s.strip.upcase
+      @search_text_query = ""
+      _search_text_params.each_with_index { |attribute, index|
+        @search_text_query += "upper(#{attribute}) like '%#{search_text}%'"
+        if (index < _search_text_params.length - 1)
+          @search_text_query += " or "
+        end
+      }
+
+      puts "@search_text_query: #{@search_text_query}"
+    end
+
     if _required_parent_model
       _parent_model
         .send(_model.name.snakecase.pluralize)
+        .where(@search_text_query.present? ? @search_text_query : "")
         .where(JSON.parse(_params[:search_by].except(*_excluded).to_json))
     else
       _log.info(
         method: "search_by",
         message: "#{_model.name} params: #{_params[:search_by].except(*_excluded)}")
       _model
+        .where(@search_text_query.present? ? @search_text_query : "")
         .where(JSON.parse(_params[:search_by].except(*_excluded).to_json))
     end
   end
@@ -204,7 +222,7 @@ module RestHelper
     raise ParamsErrors::ServiceNotRegister unless valid_service?(service: "create")
     before_create_method
     if _required_parent_model
-      @element = _model.create(_element_params.merge({ "#{_parent_model.class.name.snakecase}": _parent_model }))
+      @element = _model.create(_element_params.merge({ "#{_parent_model.class.name.snakecase}_id": _parent_model.id }))
       if @element.save
         render json: { message: 'success create', status: "success", "#{_model.name.snakecase}": @element }, adapter: :attributes
       else

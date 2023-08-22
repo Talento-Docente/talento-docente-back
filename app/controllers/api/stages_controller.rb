@@ -25,7 +25,7 @@ class Api::StagesController < AuthApplicationController
       services: %w[index show update create destroy],
       current_user: current_user,
       required_parent_model: true,
-      parent_model: Flow.find(params[:flow_id]),
+      parent_model: current_establishment.flows.find(params[:flow_id]),
       excluded: []
     )
   end

@@ -8,7 +8,7 @@
 #  hint          :text
 #  order_number  :integer          default(1)
 #  question      :text
-#  question_type :integer          default("selection")
+#  question_type :integer          default("selection_unique")
 #  value         :integer          default(1)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

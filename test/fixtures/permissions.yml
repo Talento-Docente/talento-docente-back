@@ -4,7 +4,7 @@
 #
 #  id               :bigint           not null, primary key
 #  deleted_at       :datetime
-#  permission       :integer          default("admin")
+#  permission       :integer          default("owner")
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  establishment_id :bigint

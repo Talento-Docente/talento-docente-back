@@ -81,4 +81,8 @@ class Employment < ApplicationRecord
     SCHEDULE_TYPE_PART_TIME,
     SCHEDULE_TYPE_OTHER_TIME
   ]
+
+  def postulations_resume
+    postulations.group(:stage_id).count
+  end
 end

@@ -4,7 +4,7 @@
 #
 #  id               :bigint           not null, primary key
 #  deleted_at       :datetime
-#  permission       :integer          default("admin")
+#  permission       :integer          default("owner")
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  establishment_id :bigint
@@ -18,9 +18,9 @@
 class Permission < ApplicationRecord
 
   # Constants
-  PERMISSION_ADMIN = 'admin'
-  PERMISSION_RECRUITER = 'recruiter'
-  PERMISSION_POSTULATE = 'postulate'
+  PERMISSION_OWNER = 'owner'
+  PERMISSION_WRITE = 'write'
+  PERMISSION_READ = 'read'
 
   # Relationships
   belongs_to :user
@@ -31,9 +31,9 @@ class Permission < ApplicationRecord
 
   # Enum
   enum permission: [
-    PERMISSION_ADMIN,
-    PERMISSION_RECRUITER,
-    PERMISSION_POSTULATE
+    PERMISSION_OWNER,
+    PERMISSION_WRITE,
+    PERMISSION_READ
   ]
 
 end

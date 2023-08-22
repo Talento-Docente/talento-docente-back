@@ -23,6 +23,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :integer          default("super_admin")
 #  second_last_name       :string
 #  tokens                 :json
 #  uid                    :string           default(""), not null
@@ -39,11 +40,16 @@
 #
 class User < ActiveRecord::Base
 
+  # Constants
+  ROLE_SUPER_ADMIN = 'super_admin'
+  ROLE_ESTABLISHMENT = 'establishment'
+  ROLE_APPLICANT = 'applicant'
+
   # Devise Import
   include DeviseTokenAuth::Concerns::User
 
   # Attributes
-  attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
+  attr_accessor :skip_password_validation # virtual attribute to skip password validation while saving
 
   # Devise Configuration
   devise :database_authenticatable,
@@ -54,7 +60,7 @@ class User < ActiveRecord::Base
   # Relationship
   has_many :permissions
   has_many :establishments, through: :permissions, class_name: "Establishment"
-  has_many :applicants
+  has_one :applicant
   has_one_attached :picture
 
   # Soft Delete
@@ -69,6 +75,13 @@ class User < ActiveRecord::Base
   validates_uniqueness_of_without_deleted :dni
   validate :valid_dni
 
+  # Enums
+  enum role: [
+    ROLE_SUPER_ADMIN,
+    ROLE_ESTABLISHMENT,
+    ROLE_APPLICANT
+  ]
+
   # Methods
   def format_rut
     self.dni = dni.rut_raw if dni.present?
@@ -82,6 +95,10 @@ class User < ActiveRecord::Base
     if dni.present? && !dni.gsub(/[^0-9Kk]/, '').rut_is_valid?
       errors.add(:dni, "Rut inválido")
     end
+  end
+
+  def token_validation_response
+    Api::UserSerializer.new( self, root: false ).as_json
   end
 
   # def set_password

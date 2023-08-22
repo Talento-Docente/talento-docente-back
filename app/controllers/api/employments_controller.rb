@@ -10,7 +10,19 @@ class Api::EmploymentsController < AuthApplicationController
   before_action :init_search_helper
   before_action :set_element, only: [:show, :update, :destroy]
 
-  private
+  def resume
+    resume = {
+      "#{Employment::STATUS_CREATED}": current_establishment.employments.where(status: Employment::STATUS_CREATED).count,
+      "#{Employment::STATUS_IN_PROGRESS}": current_establishment.employments.where(status: Employment::STATUS_IN_PROGRESS).count,
+      "#{Employment::STATUS_CLOSED}": current_establishment.employments.where(status: Employment::STATUS_CLOSED).count
+    }
+
+    render json: { status: "success", message: "success get", resume: resume }, status: :ok
+
+  rescue => e
+    LOG.error(method: "index", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :ok
+  end
 
   def init_search_helper
     prepare_search(
@@ -21,8 +33,10 @@ class Api::EmploymentsController < AuthApplicationController
       element_params: element_params,
       services: %w[index show update create destroy],
       current_user: current_user,
-      required_parent_model: false,
-      excluded: []
+      required_parent_model: true,
+      parent_model: current_establishment,
+      excluded: [:search_text],
+      search_text_params: %w[employments.title employments.description]
     )
   end
 
@@ -34,6 +48,7 @@ class Api::EmploymentsController < AuthApplicationController
         :sort_order,
         :sort_field,
         search_by: [
+          :search_text,
           :description,
           :employment_type,
           :end_date,

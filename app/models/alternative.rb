@@ -20,6 +20,7 @@ class Alternative < ApplicationRecord
 
   # Relationship
   belongs_to :question
+  has_one :establishment, through: :question, class_name: "Establishment"
 
   # Soft Delete
   acts_as_paranoid

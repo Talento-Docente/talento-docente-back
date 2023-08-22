@@ -20,7 +20,7 @@ class Api::QuestionsController < AuthApplicationController
       services: %w[index show update create destroy],
       current_user: current_user,
       required_parent_model: true,
-      parent_model: Test.find(params[:test_id]),
+      parent_model: current_establishment.tests.find(params[:test_id]),
       excluded: []
     )
   end

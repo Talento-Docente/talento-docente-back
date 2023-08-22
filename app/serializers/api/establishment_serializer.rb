@@ -3,6 +3,7 @@ module Api
     attributes :id,
                :address,
                :name,
-               :phone
+               :phone,
+               :dni
   end
 end

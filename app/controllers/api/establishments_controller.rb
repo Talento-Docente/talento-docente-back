@@ -36,7 +36,8 @@ class Api::EstablishmentsController < AuthApplicationController
         search_by: [
           :address,
           :name,
-          :phone
+          :phone,
+          :dni
         ]
       )
   end
@@ -44,9 +45,11 @@ class Api::EstablishmentsController < AuthApplicationController
   def element_params
     params
       .permit(
+        :id,
         :address,
         :name,
-        :phone
+        :phone,
+        :dni
       )
   end
 

@@ -13,7 +13,8 @@ module Api
                :title,
                :flow_id,
                :establishment_id,
-               :stage_configurations
+               :stage_configurations,
+               :postulations_resume
 
     has_one :flow, serializer: Api::FlowSerializer
     has_many :stage_configurations, serializer: Api::StageConfigurationSerializer

@@ -10,7 +10,6 @@ class Api::ApplicantsController < AuthApplicationController
   before_action :init_search_helper
   before_action :set_element, only: [:show, :update]
 
-
   def before_update_method
     if params[:user_attributes][:picture].blank? || params[:user_attributes][:picture] == "null"
       _element.user.picture.purge if _element.user.picture.attached?

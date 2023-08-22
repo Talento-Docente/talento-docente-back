@@ -27,6 +27,7 @@ class Stage < ApplicationRecord
 
   # Relationship
   belongs_to :flow
+  has_one :establishment, through: :flow, class_name: "Establishment"
   has_many :postulations
   has_many :stage_configurations
 

@@ -8,7 +8,13 @@ module Api
                :last_name,
                :name,
                :second_last_name,
-               :picture
+               :picture,
+               :permissions,
+               :role,
+               :applicant
+
+    has_one :permissions, serializer: Api::PermissionSerializer
+    has_one :applicant, serializer: Api::ApplicantSerializer
 
     def picture
       if object.picture.present?

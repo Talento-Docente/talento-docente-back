@@ -8,7 +8,7 @@
 #  hint          :text
 #  order_number  :integer          default(1)
 #  question      :text
-#  question_type :integer          default("selection")
+#  question_type :integer          default("selection_unique")
 #  value         :integer          default(1)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -29,6 +29,7 @@ class Question < ApplicationRecord
 
   # Relationship
   belongs_to :test
+  has_one :establishment, through: :test, class_name: "Establishment"
   has_many :alternatives, dependent: :destroy
   accepts_nested_attributes_for :alternatives, allow_destroy: true
 

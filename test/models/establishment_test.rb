@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  address    :string
 #  deleted_at :datetime
+#  dni        :string
 #  name       :string
 #  phone      :string
 #  created_at :datetime         not null

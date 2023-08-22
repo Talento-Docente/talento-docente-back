@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_13_062857) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_034653) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_062857) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dni"
   end
 
   create_table "flows", force: :cascade do |t|
@@ -197,6 +198,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_062857) do
     t.index ["establishment_id"], name: "index_tests_on_establishment_id"
   end
 
+  create_table "user_establishments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "establishment_id"
+    t.integer "permission", default: 0
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_user_establishments_on_establishment_id"
+    t.index ["user_id"], name: "index_user_establishments_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -222,6 +234,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_062857) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
