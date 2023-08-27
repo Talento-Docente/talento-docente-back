@@ -67,3 +67,12 @@ gem "acts_as_paranoid"
 # Annotate Models [https://github.com/ctran/annotate_models]
 gem 'annotate'
 
+# Dot Env
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+
+# Rest Client
+gem 'rest-client', '~> 2.1'
+
+# Mime Types
+gem 'mime-types', '~> 3.3.1'
+
