@@ -30,10 +30,17 @@ Rails.application.routes.draw do
         end
       end
       resources :postulations
+      collection do
+        get :activities, path: ':id/activities'
+      end
     end
 
     resources :applicants
-    resources :postulations
+    resources :postulations do
+      collection do
+        get :activities, path: ':id/activities'
+      end
+    end
 
     resources :onboarding, only: [:create] do
       collection do
