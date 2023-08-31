@@ -130,6 +130,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_225413) do
     t.integer "reference_type", default: 0
     t.string "resource_type"
     t.bigint "resource_id"
+    t.datetime "realized_at", precision: nil
+    t.datetime "realize_until", precision: nil
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

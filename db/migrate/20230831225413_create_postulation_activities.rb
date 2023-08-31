@@ -7,6 +7,9 @@ class CreatePostulationActivities < ActiveRecord::Migration[7.0]
       t.integer :reference_type, default: 0
       t.references :resource, polymorphic: true
 
+      t.timestamp :realized_at
+      t.timestamp :realize_until
+
       t.timestamp :deleted_at
       t.timestamps
     end

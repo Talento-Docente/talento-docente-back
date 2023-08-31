@@ -4,6 +4,8 @@
 #
 #  id                               :bigint           not null, primary key
 #  deleted_at                       :datetime
+#  realize_until                    :datetime
+#  realized_at                      :datetime
 #  reference_type                   :integer          default("document")
 #  resource_type                    :string
 #  status                           :integer          default("created")
