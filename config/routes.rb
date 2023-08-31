@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :establishments do
       resources :employments do
         collection do
+          get :applicants, path: ':id/applicants'
+          post :find_or_create_postulation, path: ':id/find_or_create'
           get :resume, path: 'get/resume'
         end
       end
@@ -27,9 +29,11 @@ Rails.application.routes.draw do
           put :update_establishment, path: '/update/establishment'
         end
       end
+      resources :postulations
     end
 
     resources :applicants
+    resources :postulations
 
     resources :onboarding, only: [:create] do
       collection do

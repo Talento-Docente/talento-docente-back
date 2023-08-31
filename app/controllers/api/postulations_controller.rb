@@ -1,9 +1,9 @@
-class Api::FlowsController < AuthApplicationController
+class Api::PostulationsController < AuthApplicationController
   # Includes
   include RestHelper
 
   # Constants
-  CLASS_NAME = "Api::FlowsController"
+  CLASS_NAME = "Api::TestsController"
   LOG = LoggerService.new(class_name: CLASS_NAME)
 
   # Scopes
@@ -12,7 +12,7 @@ class Api::FlowsController < AuthApplicationController
 
   def init_search_helper
     prepare_search(
-      model: Flow,
+      model: Postulation,
       class_name: CLASS_NAME,
       params: params,
       search_params: search_params,
@@ -20,7 +20,7 @@ class Api::FlowsController < AuthApplicationController
       services: %w[index show update create destroy],
       current_user: current_user,
       required_parent_model: true,
-      parent_model: current_establishment,
+      parent_model: current_establishment.present? ? current_establishment : current_user,
       excluded: []
     )
   end
@@ -33,9 +33,10 @@ class Api::FlowsController < AuthApplicationController
         :sort_order,
         :sort_field,
         search_by: [
-          :name,
-          :description,
-          :establishment_id
+          :id,
+          :applicant_id,
+          :employment_id,
+          :stage_id
         ]
       )
   end
@@ -44,19 +45,12 @@ class Api::FlowsController < AuthApplicationController
     params
       .permit(
         :id,
-        :name,
-        :description,
-        :establishment_id,
-        stages_attributes: [
-          :id,
-          :_destroy,
-          :description,
-          :name,
-          :stage_type,
-          :order_number,
-          :flow_id
-        ]
+        :applicant_id,
+        :employment_id,
+        :stage_id
       )
   end
+
+
 
 end

@@ -10,6 +10,7 @@ module Api
                :schedule_type,
                :start_date,
                :status,
+               :visible,
                :title,
                :flow_id,
                :establishment_id,

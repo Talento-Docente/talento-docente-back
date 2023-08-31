@@ -8,7 +8,7 @@ class Api::EmploymentsController < AuthApplicationController
 
   # Scopes
   before_action :init_search_helper
-  before_action :set_element, only: [:show, :update, :destroy]
+  before_action :set_element, only: [:show, :update, :destroy, :applicants, :find_or_create_postulation]
 
   def resume
     resume = {
@@ -22,6 +22,48 @@ class Api::EmploymentsController < AuthApplicationController
   rescue => e
     LOG.error(method: "index", message: "error response %s" % e.message)
     render json: { status: "error", message: e.message }, status: :ok
+  end
+
+  def applicants
+    applicants = User
+                   .select('users.id, users.first_name, users.last_name')
+                   .select('stages.id as stage_id, stages.name as stage_name')
+                   .select('applicants.id as applicant_id')
+                   .select('postulations.id as postulation_id')
+                   .joins(applicant: [postulations: [:stage, :employment]])
+                   .where(employments: { id: @_element.id })
+
+    render json: { status: "success", message: "success get", applicants: applicants }, status: :ok
+
+  rescue => e
+    LOG.error(method: "applicants", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :ok
+  end
+
+  def find_or_create_postulation
+    params.permit(:email, :first_name, :last_name)
+
+    user = User.find_or_create_by(email: params[:email])
+    if user.new_record?
+      user.first_name = params[:first_name]
+      user.last_name = params[:last_name]
+      user.save
+    end
+    applicant = Applicant.find_or_create_by(user: user)
+
+    first_stage = @_element.flow.stages.order(order_number: :asc).first
+
+    postulation = Postulation.find_or_create_by(
+      employment: @_element,
+      applicant: applicant,
+      stage: first_stage,
+    )
+
+    render json: { status: "success", message: "success find or create", postulation: postulation }, status: :ok
+  rescue => e
+    LOG.error(method: "find_or_create_postulation", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :ok
+
   end
 
   def init_search_helper
@@ -60,7 +102,8 @@ class Api::EmploymentsController < AuthApplicationController
           :status,
           :title,
           :flow_id,
-          :establishment_id
+          :establishment_id,
+          :visible
         ]
       )
   end
@@ -79,6 +122,7 @@ class Api::EmploymentsController < AuthApplicationController
         :status,
         :title,
         :establishment_id,
+        :visible,
         :flow_id,
         stage_configurations_attributes: [
           :id,

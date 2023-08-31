@@ -17,6 +17,7 @@ class Establishment < ApplicationRecord
   has_many :permissions
   has_many :user, through: :permissions, class_name: "User"
   has_many :employments
+  has_many :postulations, through: :employments, class_name: "Postulation"
   has_many :flows
   has_many :tests
   has_many :questions, through: :tests, class_name: "Question"

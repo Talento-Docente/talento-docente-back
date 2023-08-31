@@ -11,6 +11,7 @@
 #  phone                  :string
 #  profesional_experience :text
 #  twitter                :string
+#  visible                :boolean          default(FALSE)
 #  youtube                :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

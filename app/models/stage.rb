@@ -29,6 +29,7 @@ class Stage < ApplicationRecord
   belongs_to :flow
   has_one :establishment, through: :flow, class_name: "Establishment"
   has_many :postulations
+  has_many :applicants, through: :postulations, class_name: 'Applicant'
   has_many :stage_configurations
 
   # Soft Delete
