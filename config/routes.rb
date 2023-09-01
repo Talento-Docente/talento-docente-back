@@ -8,6 +8,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :employments, only: [] do
+      collection do
+        get :public_employments, path: 'public'
+        get :public_employment, path: 'public/:id'
+      end
+    end
+
     resources :establishments do
       resources :employments do
         collection do

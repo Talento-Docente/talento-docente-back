@@ -1,4 +1,6 @@
 class Api::EmploymentsController < AuthApplicationController
+  skip_before_action :authenticate_user!, only: [:public_employments, :public_employment]
+
   # Includes
   include RestHelper
 
@@ -60,6 +62,40 @@ class Api::EmploymentsController < AuthApplicationController
     )
 
     render json: { status: "success", message: "success find or create", postulation: postulation }, status: :ok
+  rescue => e
+    LOG.error(method: "find_or_create_postulation", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :ok
+
+  end
+
+  def public_employments
+    page = search_params[:page] || 1
+    page_size = search_params[:page_size] || 10
+    sort_field = search_params[:sort_field] || 'id'
+    sort_order = search_params[:sort_order] || 'desc'
+    employments = Employment
+                    .where(visible: true)
+                    .where(status: [Employment::STATUS_IN_PROGRESS])
+                    .where(search_params[:search_by])
+                    .page(page)
+                    .per(page_size)
+                    .order("#{sort_field} #{sort_order}")
+
+    render json: employments, adapter: :json, meta: paginate(employments), each_serializer: Api::EmploymentSerializer
+  rescue => e
+    LOG.error(method: "find_or_create_postulation", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :ok
+
+  end
+
+  def public_employment
+    id = params[:id]
+    employment = Employment.where(id: id).where(visible: true).first
+    if employment.present?
+      render json: employment, adapter: :json, serializer: Api::EmploymentSerializer
+    else
+      render json: { message: 'not found', status: 'error' }, adapter: :json, serializer: Api::EmploymentSerializer, status: :not_found
+    end
   rescue => e
     LOG.error(method: "find_or_create_postulation", message: "error response %s" % e.message)
     render json: { status: "error", message: e.message }, status: :ok
