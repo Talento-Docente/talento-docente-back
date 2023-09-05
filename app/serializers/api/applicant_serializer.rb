@@ -8,6 +8,7 @@ module Api
                :linkedin,
                :briefcase,
                :twitter,
+               :visible,
                :english_level,
                :curriculum
 

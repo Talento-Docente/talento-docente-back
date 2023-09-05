@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   has_many :permissions
   has_many :establishments, through: :permissions, class_name: "Establishment"
   has_one :applicant
+  has_many :postulations, through: :applicant, class_name: "Postulation"
   has_one_attached :picture
 
   # Soft Delete

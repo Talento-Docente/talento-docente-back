@@ -10,13 +10,16 @@ module Api
                :schedule_type,
                :start_date,
                :status,
+               :visible,
                :title,
                :flow_id,
                :establishment_id,
                :stage_configurations,
-               :postulations_resume
+               :postulations_resume,
+               :establishment
 
     has_one :flow, serializer: Api::FlowSerializer
+    has_one :establishment, serializer: Api::EstablishmentSerializer
     has_many :stage_configurations, serializer: Api::StageConfigurationSerializer
 
   end

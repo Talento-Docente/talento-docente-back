@@ -14,6 +14,7 @@
 #  start_date       :date
 #  status           :integer          default("created")
 #  title            :text
+#  visible          :boolean          default(FALSE)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  establishment_id :bigint
@@ -49,7 +50,7 @@ class Employment < ApplicationRecord
   SCHEDULE_TYPE_OTHER_TIME = 'other_time'
 
   # Relationship
-  has_many :establishments
+  belongs_to :establishment
   has_many :postulations
   has_many :applicants, through: :postulations, class_name: "Applicant"
   belongs_to :flow

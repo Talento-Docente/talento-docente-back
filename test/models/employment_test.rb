@@ -14,6 +14,7 @@
 #  start_date       :date
 #  status           :integer          default("created")
 #  title            :text
+#  visible          :boolean          default(FALSE)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  establishment_id :bigint

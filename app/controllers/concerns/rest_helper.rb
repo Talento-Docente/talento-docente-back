@@ -131,9 +131,11 @@ module RestHelper
 
   def all
     if _required_parent_model
-      _parent_model
+      t = _parent_model
         .send(_model.name.snakecase.pluralize)
         .all
+      puts "all_query: #{t.to_sql}"
+      t
     else
       _model
         .all

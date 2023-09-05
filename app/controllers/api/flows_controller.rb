@@ -10,8 +10,6 @@ class Api::FlowsController < AuthApplicationController
   before_action :init_search_helper
   before_action :set_element, only: [:show, :update, :destroy]
 
-  private
-
   def init_search_helper
     prepare_search(
       model: Flow,
@@ -60,7 +58,5 @@ class Api::FlowsController < AuthApplicationController
         ]
       )
   end
-
-
 
 end

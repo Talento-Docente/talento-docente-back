@@ -24,6 +24,7 @@ class Postulation < ApplicationRecord
 
   # Relationship
   belongs_to :employment
+  has_one :establishment, through: :employment, class_name: "Establishment"
   belongs_to :applicant
   belongs_to :stage, optional: true
 

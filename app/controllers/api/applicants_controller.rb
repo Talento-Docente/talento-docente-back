@@ -51,7 +51,8 @@ class Api::ApplicantsController < AuthApplicationController
           :linkedin,
           :briefcase,
           :twitter,
-          :english_level
+          :english_level,
+          :visible
         ]
       )
   end
@@ -78,6 +79,7 @@ class Api::ApplicantsController < AuthApplicationController
           :email,
           :name,
           :picture,
+          :visible,
           :skip_password_validation,
           :password,
           :password_confirmation
