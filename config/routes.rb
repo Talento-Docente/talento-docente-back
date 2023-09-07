@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :users, only: [] do
       collection do
         put :update, path: ''
+        post :upload_file, path: 'upload/:document_name'
+        delete :delete_file, path: 'upload/:document_name'
       end
     end
 
@@ -48,6 +50,9 @@ Rails.application.routes.draw do
         get :activities, path: ':id/activities'
       end
     end
+    resources :work_experiences
+    resources :academic_trainings
+    resources :skills, only: [:index, :create]
 
     resources :onboarding, only: [:create] do
       collection do

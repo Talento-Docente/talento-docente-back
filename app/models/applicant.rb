@@ -30,12 +30,22 @@ class Applicant < ApplicationRecord
   ENGLISH_LEVEL_5 = "english_level_5"
   ENGLISH_LEVEL_6 = "english_level_6"
 
+  # Active Storage
+  has_one_attached :curriculum
+
   # Relationship
   belongs_to :user, dependent: :destroy
   accepts_nested_attributes_for :user, allow_destroy: true, reject_if: :all_blank
   has_many :postulations
   has_many :employments, through: :postulations, class_name: "Employment"
-  has_one_attached :curriculum
+  has_many :work_experiences
+  accepts_nested_attributes_for :work_experiences, allow_destroy: true, reject_if: :all_blank
+  has_many :academic_trainings
+  accepts_nested_attributes_for :academic_trainings, allow_destroy: true, reject_if: :all_blank
+  has_many :applicant_skills
+  accepts_nested_attributes_for :applicant_skills, allow_destroy: true, reject_if: :all_blank
+  has_many :skills, through: :applicant_skills, class_name: "Skill"
+  accepts_nested_attributes_for :skills, allow_destroy: true, reject_if: :all_blank
 
   # Soft Delete
   acts_as_paranoid

@@ -40,6 +40,12 @@
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v7.0.4.3, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="acts_as_paranoid (v0.8.1, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="annotate (v3.2.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="aws-eventstream (v1.2.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="aws-partitions (v1.818.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="aws-sdk-core (v3.181.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="aws-sdk-kms (v1.71.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="aws-sdk-s3 (v1.134.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="aws-sigv4 (v1.6.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bcrypt (v3.1.18, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bootsnap (v1.16.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.4, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
@@ -63,6 +69,7 @@
     <orderEntry type="library" scope="PROVIDED" name="image_processing (v1.12.2, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="io-console (v0.6.0, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="irb (v1.6.4, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jmespath (v1.6.2, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jsonapi-renderer (v0.2.2, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="kaminari (v1.2.2, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="kaminari-actionview (v1.2.2, RVM: ruby-3.2.0 [talento-docente]) [gem]" level="application" />

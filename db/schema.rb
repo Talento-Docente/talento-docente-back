@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_03_084742) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_062812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "academic_trainings", force: :cascade do |t|
+    t.bigint "applicant_id"
+    t.string "study_house_name"
+    t.string "career_name"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_academic_trainings_on_applicant_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,6 +64,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_084742) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_alternatives_on_question_id"
+  end
+
+  create_table "applicant_skills", force: :cascade do |t|
+    t.bigint "applicant_id"
+    t.bigint "skill_id"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_applicant_skills_on_applicant_id"
+    t.index ["skill_id"], name: "index_applicant_skills_on_skill_id"
   end
 
   create_table "applicants", force: :cascade do |t|
@@ -164,6 +186,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_084742) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["test_id"], name: "index_questions_on_test_id"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "skill"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stage_configuration_references", force: :cascade do |t|

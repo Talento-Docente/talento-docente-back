@@ -13,6 +13,9 @@
 #
 class Establishment < ApplicationRecord
 
+  # Active Storage
+  has_one_attached :picture
+
   # Relationship
   has_many :permissions
   has_many :user, through: :permissions, class_name: "User"

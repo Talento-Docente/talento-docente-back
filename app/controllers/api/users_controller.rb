@@ -4,6 +4,48 @@ class Api::UsersController < AuthApplicationController
   CLASS_NAME = "Api::UsersController"
   LOG = LoggerService.new(class_name: CLASS_NAME)
 
+  def upload_file
+    params.permit(:document_name, :file)
+
+    if params[:document_name] === 'picture'
+      current_user.update(picture: params[:file])
+
+    elsif params[:document_name] === 'curriculum'
+      current_user.applicant.update(curriculum: params[:file])
+
+    else
+      raise StandardError, "Tipo de documento no especificado"
+
+    end
+
+    render json: { status: "success", message: "Archivo cargado" }, status: :ok
+
+  rescue StandardError => e
+    LOG.error(method: "upload_file", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :internal_server_error
+  end
+
+  def delete_file
+    params.permit(:document_name)
+
+    if params[:document_name] === 'picture'
+      current_user.picture.purge if current_user.picture.present?
+
+    elsif params[:document_name] === 'curriculum'
+      current_user.applicant.curriculum.purge if current_user.applicant.curriculum.present?
+
+    else
+      raise StandardError, "Tipo de documento no especificado"
+
+    end
+
+    render json: { status: "success", message: "Archivo eliminado" }, status: :ok
+
+  rescue StandardError => e
+    LOG.error(method: "upload_file", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :internal_server_error
+  end
+
   def update
     current_user
       .update(

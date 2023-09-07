@@ -12,7 +12,8 @@ module RestHelper
               :_current_user,
               :_required_parent_model,
               :_parent_model,
-              :_search_text_params
+              :_search_text_params,
+              :_create_with_parent
 
   def prepare_search(model:,
                      class_name: "",
@@ -23,6 +24,7 @@ module RestHelper
                      current_user: nil,
                      required_parent_model: false,
                      parent_model: nil,
+                     create_with_parent: false,
                      excluded: [],
                      search_text_params: nil)
     @_model = model
@@ -36,6 +38,7 @@ module RestHelper
     @_required_parent_model = required_parent_model
     @_parent_model = parent_model
     @_search_text_params = search_text_params
+    @_create_with_parent = create_with_parent
   end
 
   def search_params
@@ -197,7 +200,6 @@ module RestHelper
     raise ParamsErrors::ServiceNotRegister unless valid_service?(service: "update")
     raise ParamsErrors::NotFound unless _element.present?
     before_update_method
-    puts "_element_params: #{_element_params.inspect}"
     if _element.update(_element_params)
       render json: { message: 'success update', status: "success", "#{_model.name.snakecase}": _element }, adapter: :attributes
     else
@@ -224,7 +226,11 @@ module RestHelper
     raise ParamsErrors::ServiceNotRegister unless valid_service?(service: "create")
     before_create_method
     if _required_parent_model
-      @element = _model.create(_element_params.merge({ "#{_parent_model.class.name.snakecase}_id": _parent_model.id }))
+      if @_create_with_parent
+        @element = _model.create(_element_params.merge({ "#{_parent_model.class.name.snakecase}_id": _parent_model.id }))
+      else
+        @element = _model.create(_element_params)
+      end
       if @element.save
         render json: { message: 'success create', status: "success", "#{_model.name.snakecase}": @element }, adapter: :attributes
       else

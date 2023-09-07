@@ -57,12 +57,17 @@ class User < ActiveRecord::Base
          :recoverable,
          :rememberable
 
+  # Active Storage
+  has_one_attached :picture
+
   # Relationship
+  has_one :applicant
   has_many :permissions
   has_many :establishments, through: :permissions, class_name: "Establishment"
-  has_one :applicant
   has_many :postulations, through: :applicant, class_name: "Postulation"
-  has_one_attached :picture
+  has_many :work_experiences, through: :applicant, class_name: "WorkExperience"
+  has_many :academic_trainings, through: :applicant, class_name: "AcademicTraining"
+  has_many :skills, through: :applicant, class_name: "Skill"
 
   # Soft Delete
   acts_as_paranoid
