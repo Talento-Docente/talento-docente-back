@@ -1,4 +1,3 @@
-
 ##
 # Creación de usuario administrador para ambiente de pruebas
 if Rails.env.development?
@@ -12,7 +11,15 @@ if Rails.env.development?
   unless user.save
     puts "errors: #{user.errors.full_messages}"
   end
+
+  Applicant.find_or_create_by(user: user)
+  establishment = Establishment.find_or_create_by(
+    address: "Dirección de Prueba",
+    dni: "773382867",
+    name: "Talento Docente",
+    phone: "56966777974",
+  )
+
+  Permission.find_or_create_by(establishment: establishment, user: user, permission: Permission::PERMISSION_OWNER)
+
 end
-
-
-# PLDY 14

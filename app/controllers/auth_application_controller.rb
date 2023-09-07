@@ -17,7 +17,7 @@ class AuthApplicationController < ApplicationController
   end
 
   def current_establishment
-    current_user.establishments.where(id: params[:establishment_id]).first
+    current_user&.establishments&.where(id: params[:establishment_id])&.first
   end
 
   def paginate(objects)
