@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         collection do
           put :update_establishment, path: '/update/establishment'
+          post :upload_establishment_file, path: 'upload/establishment/:document_name'
+          delete :delete_establishment_file, path: 'upload/establishment/:document_name'
         end
       end
       resources :postulations

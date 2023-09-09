@@ -42,7 +42,7 @@ class Api::UsersController < AuthApplicationController
     render json: { status: "success", message: "Archivo eliminado" }, status: :ok
 
   rescue StandardError => e
-    LOG.error(method: "upload_file", message: "error response %s" % e.message)
+    LOG.error(method: "delete_file", message: "error response %s" % e.message)
     render json: { status: "error", message: e.message }, status: :internal_server_error
   end
 
@@ -78,6 +78,43 @@ class Api::UsersController < AuthApplicationController
     LOG.error(method: "update_establishment", message: "error response %s" % e.message)
     render json: { status: "error", message: e.message }, status: :ok
 
+  end
+
+  def upload_establishment_file
+    params.permit(:document_name, :file)
+
+    if params[:document_name] === 'picture'
+      result = current_establishment.update(picture: params[:file])
+      puts "result: #{result.inspect}"
+    else
+      raise StandardError, "Tipo de documento no especificado"
+
+    end
+
+    render json: { status: "success", message: "Archivo cargado" }, status: :ok
+
+  rescue StandardError => e
+    LOG.error(method: "upload_establishment_file", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :internal_server_error
+
+  end
+
+  def delete_establishment_file
+    params.permit(:document_name)
+
+    if params[:document_name] === 'picture'
+      current_establishment.picture.purge if current_establishment.picture.present?
+
+    else
+      raise StandardError, "Tipo de documento no especificado"
+
+    end
+
+    render json: { status: "success", message: "Archivo eliminado" }, status: :ok
+
+  rescue StandardError => e
+    LOG.error(method: "delete_establishment_file", message: "error response %s" % e.message)
+    render json: { status: "error", message: e.message }, status: :internal_server_error
   end
 
   def update_params
