@@ -20,7 +20,7 @@ class AcademicTraining < ApplicationRecord
 
   # Constants
 
-  # Relationships
+  # Relationship
   belongs_to :applicant
 
   # Soft Delete

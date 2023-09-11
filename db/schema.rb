@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_062812) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_161957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,6 +93,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_062812) do
     t.index ["user_id"], name: "index_applicants_on_user_id"
   end
 
+  create_table "employment_answers", force: :cascade do |t|
+    t.bigint "employment_question_id"
+    t.bigint "postulation_id"
+    t.text "answer"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employment_question_id"], name: "index_employment_answers_on_employment_question_id"
+    t.index ["postulation_id"], name: "index_employment_answers_on_postulation_id"
+  end
+
+  create_table "employment_questions", force: :cascade do |t|
+    t.bigint "employment_id"
+    t.string "question"
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employment_id"], name: "index_employment_questions_on_employment_id"
+  end
+
   create_table "employments", force: :cascade do |t|
     t.bigint "establishment_id"
     t.text "title"
@@ -110,6 +130,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_062812) do
     t.datetime "updated_at", null: false
     t.bigint "flow_id"
     t.boolean "visible", default: false
+    t.text "requirement"
+    t.text "benefit"
     t.index ["establishment_id"], name: "index_employments_on_establishment_id"
     t.index ["flow_id"], name: "index_employments_on_flow_id"
   end

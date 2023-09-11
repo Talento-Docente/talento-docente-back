@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
 
   # Validate
   validates_uniqueness_of_without_deleted :dni
-  validate :valid_dni
+  # validate :valid_dni
 
   # Enums
   enum role: [

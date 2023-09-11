@@ -20,7 +20,7 @@ class ApplicantSkill < ApplicationRecord
   belongs_to :skill
   belongs_to :applicant
 
-  # Relationships
+  # Relationship
 
   # Soft Delete
   acts_as_paranoid

@@ -3,12 +3,14 @@
 # Table name: employments
 #
 #  id               :bigint           not null, primary key
+#  benefit          :text
 #  deleted_at       :datetime
 #  description      :text
 #  employment_type  :integer          default("presencial")
 #  end_date         :date
 #  hours            :integer          default(0)
 #  qualification    :integer          default("practice")
+#  requirement      :text
 #  salary           :integer
 #  schedule_type    :integer          default("full_time")
 #  start_date       :date
@@ -56,6 +58,7 @@ class Employment < ApplicationRecord
   belongs_to :flow
   has_many :stage_configurations, dependent: :destroy
   accepts_nested_attributes_for :stage_configurations, allow_destroy: true
+  has_many :employment_questions
 
   # Soft Delete
   acts_as_paranoid

@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: employment_questions
+#
+#  id            :bigint           not null, primary key
+#  deleted_at    :datetime
+#  question      :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  employment_id :bigint
+#
+# Indexes
+#
+#  index_employment_questions_on_employment_id  (employment_id)
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
